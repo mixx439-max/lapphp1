@@ -1,82 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>การใช้ User-define Function ฟังก์ชั่นที่สร้างขึ้นเอง</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1024, initial-scale=1.0">
+<title>PHP Built-in Function ฟังก์ชันที่มีพร้อมใช้ใน php</title>
 </head>
 <body>
-    <h1>การใช้ User-define Function ฟังก์ชั่นที่สร้างขึ้นเอง</h1>
+
+<h1>PHP Built-in Function ฟังก์ชันที่มีพร้อมใช้ใน php</h1>
+<h2>ทดสอบการใช้ function date()</h2>
 
 <?php
-echo "ผลบวกของ 10 กับ 20 คือ = " . sum(10, 20) . "<br>";
-echo "ผลบวกของ 15 กับ 25 คือ = " . sum(15, 25) . "<br>";
-
-$a = 30;
-$b = 45;
-
-echo "ผลบวกของ $a กับ $b คือ = " . sum($a, $b) . "<br><br>";
-
-$num = 50;
-echo "ค่าของ num ก่อนเรียกฟังก์ชัน add_five() คือ $num<br>";
-
-$new_num = add_five($num);
-echo "ค่าที่ได้จาก add_five() คือ $new_num<br>";
-echo "ค่าของ num หลังการเรียกฟังก์ชัน add_five() คือ $num (ค่าไม่เปลี่ยน เพราะส่งแบบค่า)<br>";
+    echo "วันนี้วันที่ " . date("d/m/Y") . "<br>";
+    echo "เวลาขณะนี้คือ " . date("H:i:s") . "<br>";
+    echo "วันนี้เป็นวัน " . date("l");
 ?>
 
-<h2>ตัวอย่าง function ที่มีพารามิเตอร์หลายตัว</h2>
-
+<h2>ทดสอบการใช้ function date_diff</h2>
 <?php
-function sumListofNumber(...$x){
-    $n = 0;
-    foreach ($x as $value){
-        $n += $value;
-    }
-    return $n;
-}
+    $date1 = date_create("2000-01-01");
+    $date2 = date_create("2024-06-15");
+    $diff  = date_diff($date1, $date2);
 
-echo "ผลบวกของตัวเลข 10, 20, 30 คือ = " . sumListofNumber(10,20,30) . "<br>";
-echo "ผลบวกของตัวเลข 1-10 คือ = " . sumListofNumber(1,2,3,4,5,6,7,8,9,10) . "<br>";
+    echo "จำนวนวันระหว่างวันที่ 1 มกราคม 2000 ถึง 15 มิถุนายน 2024 คือ "
+         . $diff->days . " วัน<br>";
 
-function myFamilyNames($lastName, ...$names){
-    foreach($names as $firstName){
-        echo "สวัสดี คุณ " . $firstName . " " . $lastName . "<br>";
-    }
-}
-
-myFamilyNames("สวยใส","สมชาย","สมศักดิ์","สมหมาย","สมพร");
+    echo "หรือเท่ากับ "
+         . $diff->y . " ปี, "
+         . $diff->m . " เดือน, "
+         . $diff->d . " วัน<br>";
 ?>
-
-<h2>ตัวอย่าง function ที่มีพารามิเตอร์ค่าเริ่มต้น</h2>
-
+<h2>ทดสอบการใช้ Math functions</h2>
 <?php
-function thai_date($strDate = "now"){
-    $strYear = date("Y",strtotime($strDate)) + 543;
-    $strMonth = date("n",strtotime($strDate));
-    $strDay = date("j",strtotime($strDate));
+    $num1 = 10.3;
+    $num2 = 15.7;
+    $pi   = 3.14159;
 
-    $strMonthNames = ["","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
-                      "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+    echo "ค่าปัดเศษของ \$num1 คือ = " . ceil($num1) . "<br>";
+    echo "ค่าปัดเศษของ \$num2 คือ = " . floor($num2) . "<br>";
+    echo "ค่าของ pi ปัดเป็นทศนิยม 2 ตำแหน่ง คือ = " . round($pi, 2) . "<br>";
+    echo "ค่าของ pi คือ = " . pi() . "<br>";
+    echo "ค่ารากที่ 2 ของ 49 คือ = " . sqrt(49) . "<br>";
+    echo "ค่ากำลัง 5 ยกกำลัง 3 คือ = " . pow(5, 3) . "<br>";
 
-    
-    $strMonthThai = $strMonthNames[$strMonth];
+    echo "สุ่มตัวเลข 1 ถึง 100 คือ = " . rand(1, 100) . "<br>";
+    echo "สุ่มตัวเลข 50 ถึง 150 คือ = " . rand(50, 150) . "<br>";
+    echo "ค่าสุ่ม คือ = " . rand() . "<br>";
 
-    return "$strDay $strMonthThai พ.ศ. $strYear";
-}
+    $arr = array(3, 5, 1, 8, 2);
 
-echo thai_date("2025-12-11") . "<br>";
-echo thai_date(); 
+    echo "ค่ามากใน Array คือ = " . max($arr) . "<br>";
+    echo "ค่าน้อยใน Array คือ = " . min($arr) . "<br>";
 ?>
+<h2>ทดสอบการใช้ String Function</h2>
+<?php
+    $str = "Hello PHP Function";
+
+    echo "ความยาวของข้อความ \"$str\" คือ : " . strlen($str) . "<br>";
+    echo "แปลงข้อความ \"$str\" เป็นตัวพิมพ์ใหญ่ คือ : " . strtoupper($str) . "<br>";
+    echo "แปลงข้อความ \"$str\" เป็นตัวพิมพ์เล็ก คือ : " . strtolower($str) . "<br>";
+    echo "ตัวอักษรตัวแรกเป็นตัวพิมพ์ใหญ่ คือ : " . ucfirst($str) . "<br>";
+    echo "ทำตัวอักษรขึ้นต้นแต่ละคำเป็นพิมพ์ใหญ่ คือ : " . ucwords($str) . "<br><br>";
+    $substr = "PHP";
+    echo "ตำแหน่งของคำ \"$substr\" ในข้อความ \"$str\" คือ : " . strpos($str, $substr) . "<br><br>";
+    $replace = str_replace("Function", "ฟังก์ชัน", $str);
+    echo "ข้อความหลังแทนที่ : " . $replace . "<br><br>";
+    $str2 = "   PHP Function with Spaces   ";
+    echo "ก่อน trim: '$str2' <br>";
+    echo "หลัง trim: '" . trim($str2) . "' <br>";
+?>
+<?php myFooter(); ?>   <!-- เรียกใช้ function -->
+
 </body>
 </html>
 
 <?php
-function sum($num1, $num2) {
-    return $num1 + $num2;
-}
-
-function add_five($num) {
-    return $num + 5;
+function myFooter() {
+    echo "<footer><hr>";
+    echo "<p>PHP Built-in Function Example &copy; 2024</p>";
+    echo "<p>สร้างโดย: Surapong Kumbusdee</p>";
+    echo "</footer>";
 }
 ?>
+
+</body>
+</html>
